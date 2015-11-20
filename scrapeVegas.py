@@ -90,10 +90,10 @@ def make_games(rows):
             spread = 'Not available yet.'
             favorite = 'Not available yet.'
         else:
-            favorite = game[5]
-            spread = game[9]
-            total = game[13]
-            money_line = ''  # game[17]
+            favorite = game[(game.index('Favorite') + 1)]  # game[5]
+            spread = game[(game.index('Point spread') + 1)]  # game[9]
+            total = game[(game.index('Total') + 1)]  # game[13]
+            money_line = game[(game.index('Total money line') + 1)]  # game[17]
             new_game = Game(date, time, team1, team2, favorite, spread,
                             total, money_line)
             games.append(new_game)
