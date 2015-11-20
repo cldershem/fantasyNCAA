@@ -8,11 +8,10 @@ Scraping of vegas.com for Barnes.
 
 :copyright: (c) 2015 by Cameron Dershem.
 :license: see TOPMATTER
-:source: github.com/cldershem/{}
+:source: github.com/cldershem/fantasyNCAA
 """
 import requests
 from bs4 import BeautifulSoup
-from pprint import pprint
 
 
 class Game(object):
@@ -30,6 +29,10 @@ class Game(object):
 
     def __repr__(self):
         return '<Game({} v {}>'.format(self.team1, self.team2)
+
+    def info(self):
+        return ('date={}, team1={}, team2={}, favorite={}, spread={}'.format(
+                self.date, self.team1, self.team2, self.favorite, self.spread))
 
 
 def get_page(url):
@@ -85,6 +88,7 @@ def make_games(rows):
         team2 = game[3]
         if game[4] == 'Point spreads have not been posted for this contest':
             spread = 'Not available yet.'
+            favorite = 'Not available yet.'
         else:
             favorite = game[5]
             spread = game[9]
@@ -102,4 +106,5 @@ if __name__ == "__main__":
     page = BeautifulSoup(page, 'html.parser')
     rows = get_table(page)
     games = make_games(rows)
-    pprint(games)
+    for game in games:
+        print(game.info())
